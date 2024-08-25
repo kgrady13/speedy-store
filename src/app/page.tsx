@@ -16,7 +16,6 @@ export default function HomePage() {
     <main className="">
       <ThreeItemGrid />
       <Carousel />
-
       <Footer />
     </main>
   );

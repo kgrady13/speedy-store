@@ -43,7 +43,6 @@ export type ProductVariant = {
 };
 
 export async function Carousel() {
-  // Sample fake products
   const products: Product[] = [
     {
       handle: "stylish-watch",
@@ -310,10 +309,7 @@ export async function Carousel() {
             key={`${product.handle}${i}`}
             className="relative aspect-square h-[30vh] max-h-[275px] w-2/3 max-w-[475px] flex-none md:w-1/3"
           >
-            <Link
-              href={`/product/${product.handle}`}
-              className="relative h-full w-full"
-            >
+            <Link href="#" className="relative h-full w-full">
               <GridTileImage
                 alt={product.title}
                 label={{

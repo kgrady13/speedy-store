@@ -23,7 +23,7 @@ const NavLink = ({
       className={cn(
         className,
         isActive ? "underline underline-offset-8 opacity-100" : "opacity-85",
-        "hover:opacity-100 transition-opacity duration-200 underline-offset-8 hover:underline hidden md:block"
+        "hover:opacity-100 transition-opacity duration-200 decoration-emerald-700 underline-offset-8 hover:underline hidden md:block"
       )}
     >
       {children}

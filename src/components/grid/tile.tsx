@@ -40,6 +40,7 @@ export function GridTileImage({
                 isInteractive,
             }
           )}
+          // loading={props.priority ? "eager" : "lazy"}
           {...props}
         />
       ) : null}
@@ -80,7 +81,7 @@ const Label = ({
           {title}
         </h3>
         <Price
-          className="flex-none font-sans rounded-full bg-brand-green p-2 text-brand-beige"
+          className="flex-none font-sans rounded-full bg-emerald-700 p-2 text-brand-beige"
           amount={amount}
           currencyCode={currencyCode}
           currencyCodeClassName="hidden @[275px]/label:inline"
