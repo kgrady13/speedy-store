@@ -85,20 +85,36 @@ export default function ProductInformationPage({
           <h2 className="sr-only">Images</h2>
 
           <div className="relative grid grid-cols-1 lg:grid-cols-2 lg:grid-rows-2 place-items-stretch lg:gap-8">
-            {product.images.map((image, index) => (
-              <Image
-                key={image.id}
-                src={image.imageSrc}
-                alt={image.imageAlt}
-                width={697}
-                height={607}
-                sizes="(max-width: 768px) 100vw, 50vw"
-                className={cn(
-                  image.primary ? "lg:col-span-2" : "hidden lg:block",
-                  "rounded-lg object-cover"
-                )}
-              />
-            ))}
+            {product.images.map((image, index) =>
+              index === 0 ? (
+                <Image
+                  priority
+                  key={image.id}
+                  src={image.imageSrc}
+                  alt={image.imageAlt}
+                  width={697}
+                  height={607}
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  className={cn(
+                    image.primary ? "lg:col-span-2" : "hidden lg:block",
+                    "rounded-lg object-cover"
+                  )}
+                />
+              ) : (
+                <Image
+                  key={image.id}
+                  src={image.imageSrc}
+                  alt={image.imageAlt}
+                  width={697}
+                  height={607}
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  className={cn(
+                    image.primary ? "lg:col-span-2" : "hidden lg:block",
+                    "rounded-lg object-cover"
+                  )}
+                />
+              )
+            )}
           </div>
         </div>
 
@@ -205,10 +221,18 @@ export default function ProductInformationPage({
                     className="mt-3 space-y-6 text-sm text-gray-500"
                   />
                 </div>
+                <div className="mt-6 flex lg:hidden items-center text-sm lg:col-span-4 lg:col-start-1 lg:row-start-1 lg:mt-0 lg:flex-col lg:items-start xl:col-span-3">
+                  <p className="font-bold text-gray-900">{review.author}</p>
+                  <time
+                    dateTime={review.datetime}
+                    className="ml-4 border-l border-gray-200 pl-4 text-gray-500 lg:ml-0 lg:mt-2 lg:border-0 lg:pl-0"
+                  >
+                    {review.date}
+                  </time>
+                </div>
               </div>
-
-              <div className="mt-6 flex items-center text-sm lg:col-span-4 lg:col-start-1 lg:row-start-1 lg:mt-0 lg:flex-col lg:items-start xl:col-span-3">
-                <p className="font-medium text-gray-900">{review.author}</p>
+              <div className="mt-6 hidden lg:flex px-4 items-center text-sm lg:col-span-4 lg:col-start-1 lg:row-start-1 lg:mt-0 lg:flex-col lg:items-start xl:col-span-3">
+                <p className="font-bold text-gray-900">{review.author}</p>
                 <time
                   dateTime={review.datetime}
                   className="ml-4 border-l border-gray-200 pl-4 text-gray-500 lg:ml-0 lg:mt-2 lg:border-0 lg:pl-0"
@@ -227,11 +251,11 @@ export default function ProductInformationPage({
           Customers also purchased
         </h2>
 
-        <div className="mt-6 grid gap-4 gap-y-10 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:gap-x-8">
+        <div className="mt-6 flex flex-wrap gap-4 gap-y-10 lg:gap-x-8">
           {relatedProducts.map((relatedProduct) => (
             <div
               key={relatedProduct.id}
-              className="group relative max-w-44 lg:max-w-none"
+              className="group relative max-w-44 lg:max-w-64"
             >
               <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md lg:aspect-none group-hover:opacity-75 lg:h-80">
                 <Image
@@ -349,7 +373,29 @@ const reviews = {
       date: "May 16, 2021",
       datetime: "2021-01-06",
     },
-    // More reviews...
+    {
+      id: 2,
+      title: "Very comfy and looks the part",
+      rating: 5,
+      content: `
+        <p>After a quick chat with customer support, I had a good feeling about this shirt and ordered three of them.</p>
+        <p>Less than 48 hours later, my delivery arrived. I haven't worn anything else since that day! These shirts are so comfortable, yet look classy enough that I can wear them at work or even some formal events. Winning!</p>
+      `,
+      author: "Jackie H",
+      date: "April 6, 2021",
+      datetime: "2021-04-06",
+    },
+    {
+      id: 3,
+      title: "The last shirts I may ever need",
+      rating: 4,
+      content: `
+        <p>I bought two of those comfy cotton shirts, and let me tell you: they're amazing! I have been wearing them almost every day. Even after a dozen of washes, that still looks and feel good as new. Will definitely order a few more... If I ever need to!</p>
+      `,
+      author: "Laura G",
+      date: "February 24, 2021",
+      datetime: "2021-02-24",
+    },
   ],
 };
 const relatedProducts = [
