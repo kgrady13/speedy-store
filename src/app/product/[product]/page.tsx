@@ -85,9 +85,8 @@ export default function ProductInformationPage({
           <h2 className="sr-only">Images</h2>
 
           <div className="relative grid grid-cols-1 lg:grid-cols-2 lg:grid-rows-2 place-items-stretch lg:gap-8">
-            {product.images.map((image) => (
+            {product.images.map((image, index) => (
               <Image
-                priority
                 key={image.id}
                 src={image.imageSrc}
                 alt={image.imageAlt}
