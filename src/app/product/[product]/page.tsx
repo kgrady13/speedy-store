@@ -23,7 +23,7 @@ export async function generateMetadata({
   //   const { url, width, height, altText: alt } = product.featuredImage || {};
 
   return {
-    title: `${params.product} | Speedy Store`,
+    title: `${decodeURIComponent(params.product)} | Speedy Store`,
     description:
       "High-performance ecommerce store built with Next.js, Vercel, and Stripe. Designed + Developed by karson.cc.",
     openGraph: {
@@ -32,15 +32,18 @@ export async function generateMetadata({
   };
 }
 
-export default function ProductInformationPage() {
+export default function ProductInformationPage({
+  params,
+}: {
+  params: { product: string };
+}) {
+  const title = decodeURIComponent(params.product);
   return (
     <main className="mx-auto mt-8 max-w-2xl px-4 pb-16 sm:px-6 sm:pb-24 lg:max-w-7xl lg:px-8">
       <div className="lg:grid lg:auto-rows-min lg:grid-cols-12 lg:gap-x-8">
         <div className="lg:col-span-5 lg:col-start-8  backdrop-blur p-4 rounded-2xl border border-black/5">
           <div className="flex justify-between">
-            <h1 className="text-xl font-medium text-gray-900">
-              {product.name}
-            </h1>
+            <h1 className="text-xl font-medium text-gray-900">{title}</h1>
             <p className="text-xl font-medium text-gray-900">{product.price}</p>
           </div>
           {/* Reviews */}
@@ -65,10 +68,7 @@ export default function ProductInformationPage() {
                   />
                 ))}
               </div>
-              <div aria-hidden="true" className="ml-4 text-sm text-gray-300">
-                ·
-              </div>
-              <div className="ml-4 flex">
+              <div className="border-l pl-4 ml-4 flex">
                 <a
                   href="#"
                   className="text-sm font-medium text-emerald-600 hover:text-emerald-500"
@@ -84,13 +84,16 @@ export default function ProductInformationPage() {
         <div className="mt-8 lg:col-span-7 lg:col-start-1 lg:row-span-3 lg:row-start-1 lg:mt-0 ">
           <h2 className="sr-only">Images</h2>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 lg:grid-rows-2 place-items-stretch lg:gap-8">
+          <div className="relative grid grid-cols-1 lg:grid-cols-2 lg:grid-rows-2 place-items-stretch lg:gap-8">
             {product.images.map((image) => (
               <Image
+                priority
                 key={image.id}
                 src={image.imageSrc}
                 alt={image.imageAlt}
-                loading="eager"
+                width={697}
+                height={607}
+                sizes="(max-width: 768px) 100vw, 50vw"
                 className={cn(
                   image.primary ? "lg:col-span-2" : "hidden lg:block",
                   "rounded-lg object-cover"
@@ -100,7 +103,7 @@ export default function ProductInformationPage() {
           </div>
         </div>
 
-        <div className="mt-8 lg:col-span-5 backdrop-blur p-4 rounded-2xl border border-black/5">
+        <div className="mt-8 lg:block lg:col-span-5 backdrop-blur p-4 rounded-2xl border border-black/5">
           {/* Color/Size picker */}
           <ProductForm product={product} />
 
@@ -225,18 +228,22 @@ export default function ProductInformationPage() {
           Customers also purchased
         </h2>
 
-        <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
+        <div className="mt-6 grid gap-4 gap-y-10 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:gap-x-8">
           {relatedProducts.map((relatedProduct) => (
-            <div key={relatedProduct.id} className="group relative">
+            <div
+              key={relatedProduct.id}
+              className="group relative max-w-44 lg:max-w-none"
+            >
               <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md lg:aspect-none group-hover:opacity-75 lg:h-80">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
+                <Image
                   alt={relatedProduct.imageAlt}
                   src={relatedProduct.imageSrc}
-                  className="h-full w-full object-cover object-center lg:h-full lg:w-full"
+                  width={200}
+                  height={200}
+                  className="h-full w-full object-cover rounded-2xl object-center lg:h-full lg:w-full"
                 />
               </div>
-              <div className="mt-4 flex justify-between">
+              <div className="mt-4 flex px-2 justify-between">
                 <div>
                   <h3 className="text-sm text-gray-700">
                     <a href={relatedProduct.href}>
@@ -351,11 +358,19 @@ const relatedProducts = [
     id: 1,
     name: "Basic Tee",
     href: "#",
-    imageSrc:
-      "https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-02.jpg",
+    imageSrc: hat1,
     imageAlt: "Front of men's Basic Tee in white.",
     price: "$35",
     color: "Aspen White",
   },
-  // More products...
+
+  {
+    id: 2,
+    name: "Basic Tee",
+    href: "#",
+    imageSrc: hat1,
+    imageAlt: "Front of men's Basic Tee in white.",
+    price: "$35",
+    color: "Aspen White",
+  },
 ];
